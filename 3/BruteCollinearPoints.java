@@ -3,6 +3,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
@@ -28,15 +30,17 @@ public class BruteCollinearPoints {
                         double slopePl = p.slopeTo(points[l]);
 
                         if (Double.compare(slopePj, slopePk) == 0 && Double.compare(slopePk, slopePl) == 0) {
-                            Point[] linePoints = new Point[] {
+                            List<Point> linePoints = Arrays.asList(
                                 p,
                                 points[j],
                                 points[k],
                                 points[l]
-                            };
+                            );
 
-                            Arrays.sort(linePoints);
-                            LineSegment lineSegment = new LineSegment(linePoints[0], linePoints[3]);
+                            Point min = Collections.min(linePoints);
+                            Point max = Collections.max(linePoints);
+
+                            LineSegment lineSegment = new LineSegment(min, max);
 
                             if (!lineSegments.containsKey(lineSegment.toString())) {
                                 lineSegments.put(lineSegment.toString(), lineSegment);
