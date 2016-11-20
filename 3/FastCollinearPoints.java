@@ -1,8 +1,10 @@
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Arrays;
+import java.util.Collections;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
@@ -30,8 +32,12 @@ public class FastCollinearPoints {
                     System.arraycopy(copy, j, linePoints, 0, count);
                     linePoints[count] = p;
 
-                    Arrays.sort(linePoints);
-                    LineSegment lineSegment = new LineSegment(linePoints[0], linePoints[count]);
+                    List<Point> linePointsAsList = Arrays.asList(linePoints);
+
+                    Point min = Collections.min(linePointsAsList);
+                    Point max = Collections.max(linePointsAsList);
+
+                    LineSegment lineSegment = new LineSegment(min, max);
 
                     if (!lineSegments.containsKey(lineSegment.toString())) {
                         lineSegments.put(lineSegment.toString(), lineSegment);
