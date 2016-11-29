@@ -5,12 +5,6 @@ import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class Board implements Iterable<Board> {
-    private static void swap(Board board, int i1, int j1, int i2, int j2) {
-        int tmp = board.blocks[i1][j1];
-        board.blocks[i1][j1] = board.blocks[i2][j2];
-        board.blocks[i2][j2] = tmp;
-    }
-
     private final int n;
     private final int[][] blocks;
 
@@ -23,6 +17,12 @@ public class Board implements Iterable<Board> {
                 this.blocks[i][j] = blocks[i][j];
             }
         }
+    }
+
+    private static void swap(Board board, int i1, int j1, int i2, int j2) {
+        int tmp = board.blocks[i1][j1];
+        board.blocks[i1][j1] = board.blocks[i2][j2];
+        board.blocks[i2][j2] = tmp;
     }
 
     private int id(int i, int j) {
@@ -69,7 +69,10 @@ public class Board implements Iterable<Board> {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (blocks[i][j] != 0) {
-                    m += Math.abs(i - row(blocks[i][j])) + Math.abs(j - col(blocks[i][j]));
+                    m += (
+                        Math.abs(i - row(blocks[i][j])) +
+                        Math.abs(j - col(blocks[i][j]))
+                    );
                 }
             }
         }
@@ -215,7 +218,7 @@ public class Board implements Iterable<Board> {
     }
 
     public static void main(String[] args) {
-        int blocks[][] = new int[][] {
+        int[][] blocks = new int[][] {
             {8, 1, 3},
             {4, 0, 2},
             {7, 6, 5}
