@@ -150,7 +150,7 @@ public class Board implements Iterable<Board> {
     }
 
     public Iterator<Board> iterator() {
-        return new BoardIterator(this);
+        return new BoardIterator();
     }
 
     public Iterable<Board> neighbors() {
@@ -161,7 +161,7 @@ public class Board implements Iterable<Board> {
         private int index = 0;
         private final List<Board> boards = new ArrayList<Board>();
 
-        public BoardIterator(Board board) {
+        public BoardIterator() {
             int i = 0;
             int j = 0;
 
@@ -173,12 +173,12 @@ public class Board implements Iterable<Board> {
                 }
             }
 
-            Board b = up(i, j);
+            Board board = up(i, j);
 
-            if (b != null) boards.add(b);
-            if ((b = right(i, j)) != null) boards.add(b);
-            if ((b = down(i, j)) != null) boards.add(b);
-            if ((b = left(i, j)) != null) boards.add(b);
+            if (board != null) boards.add(board);
+            if ((board = right(i, j)) != null) boards.add(board);
+            if ((board = down(i, j)) != null) boards.add(board);
+            if ((board = left(i, j)) != null) boards.add(board);
         }
 
         public boolean hasNext() {
