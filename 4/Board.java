@@ -168,7 +168,8 @@ public class Board implements Iterable<Board> {
             int i = 0;
             int j = 0;
 
-            outer:for (i = 0; i < n; i++) {
+            outer:
+            for (i = 0; i < n; i++) {
                 for (j = 0; j < n; j++) {
                     if (blocks[i][j] == 0) {
                         break outer;
