@@ -1,6 +1,6 @@
 javac-algs4 *.java
 
-java-algs4 Main
+java-algs4 MainClass
 
 checkstyle-algs4 *.java
 
