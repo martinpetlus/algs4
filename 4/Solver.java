@@ -4,48 +4,68 @@ import edu.princeton.cs.algs4.MinPQ;
 import java.util.List;
 import java.util.Comparator;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Solver {
-    private int numberOfMoves;
-    private Board prevBoard;
-    private List<Board> sequenceOfBoards = new ArrayList<>();
-    private MinPQ<Board> pq = new MinPQ<>(new ManhattanBoardComparator());
+    private Key goal;
+    private MinPQ<Key> pq = new MinPQ<>(new KeyComparator());
 
     public Solver(Board initial) {
         if (initial == null) {
             throw new NullPointerException("initial board is null");
         }
 
-        pq.insert(initial);
+        pq.insert(new Key(null, initial, 0, initial.manhattan()));
 
         while (true) {
-            Board min = pq.delMin();
+            Key min = pq.delMin();
 
-            sequenceOfBoards.add(min);
-
-            if (min.isGoal()) break;
-
-            for (Board board : min.neighbors()) {
-                if (prevBoard != null && prevBoard.equals(board)) continue;
-
-                pq.insert(board);
+            if (min.getBoard().isGoal()) {
+                goal = min;
+                break;
             }
 
-            numberOfMoves++;
+            for (Board board : min.getBoard().neighbors()) {
+                if (min.getPrev() != null && min.getPrev().equals(board)) continue;
 
-            prevBoard = min;
+                pq.insert(new Key(min, board, min.getMoves() + 1, board.manhattan()));
+            }
         }
     }
 
-    private static class ManhattanBoardComparator implements Comparator<Board> {
-        public int compare(Board b1, Board b2) {
-            return b1.manhattan() - b2.manhattan();
+    private static class Key {
+        private final Key prev;
+        private final Board board;
+        private final int moves;
+        private final int cost;
+
+        public Key(Key prev, Board board, int moves, int cost) {
+            this.prev = prev;
+            this.board = board;
+            this.moves = moves;
+            this.cost = cost;
+        }
+
+        public Key getPrev() {
+            return prev;
+        }
+
+        public Board getBoard() {
+            return board;
+        }
+
+        public int getMoves() {
+            return moves;
+        }
+
+        public int priority() {
+            return moves + cost;
         }
     }
 
-    private static class HammingBoardComparator implements Comparator<Board> {
-        public int compare(Board b1, Board b2) {
-            return b1.hamming() - b2.hamming();
+    private static class KeyComparator implements Comparator<Key> {
+        public int compare(Key b1, Key b2) {
+            return b1.priority() - b2.priority();
         }
     }
 
@@ -54,19 +74,24 @@ public class Solver {
     }
 
     public int moves() {
-        if (!isSolvable()) {
-            return -1;
-        } else {
-            return numberOfMoves;
-        }
+        if (!isSolvable()) return -1;
+
+        return goal.getMoves();
     }
 
     public Iterable<Board> solution() {
-        if (!isSolvable()) {
-            return null;
-        } else {
-            return sequenceOfBoards;
+        if (!isSolvable()) return null;
+
+        List<Board> boards = new ArrayList<>();
+        Key curr = goal;
+
+        while (curr != null) {
+            boards.add(curr.getBoard());
+            curr = curr.getPrev();
         }
+
+        Collections.reverse(boards);
+        return boards;
     }
 
     public static void main(String[] args) {
