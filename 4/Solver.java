@@ -8,6 +8,8 @@ import java.util.Collections;
 
 public class Solver {
     private Key goal;
+    private int moves;
+    private List<Board> sequenceOfBoards;
     private MinPQ<Key> pq = new MinPQ<>(new KeyComparator());
 
     public Solver(Board initial) {
@@ -36,6 +38,24 @@ public class Solver {
                 );
             }
         }
+
+        if (isSolvable()) {
+            sequenceOfBoards = new ArrayList<>();
+            Key curr = goal;
+
+            while (curr != null) {
+                sequenceOfBoards.add(curr.getBoard());
+                curr = curr.getPrev();
+            }
+
+            Collections.reverse(sequenceOfBoards);
+
+            moves = goal.getMoves();
+        }
+
+        // Clean up
+        pq = null;
+        goal = null;
     }
 
     private static class Key {
@@ -81,22 +101,13 @@ public class Solver {
     public int moves() {
         if (!isSolvable()) return -1;
 
-        return goal.getMoves();
+        return moves;
     }
 
     public Iterable<Board> solution() {
         if (!isSolvable()) return null;
 
-        List<Board> boards = new ArrayList<>();
-        Key curr = goal;
-
-        while (curr != null) {
-            boards.add(curr.getBoard());
-            curr = curr.getPrev();
-        }
-
-        Collections.reverse(boards);
-        return boards;
+        return sequenceOfBoards;
     }
 
     public static void main(String[] args) {
