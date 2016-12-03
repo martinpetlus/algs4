@@ -189,23 +189,23 @@ public class Board {
             outer:
             for (i = 0; i < n; i++) {
                 for (j = 0; j < n; j++) {
-                    if (blocks[i][j] == 0) {
+                    if (Board.this.blocks[i][j] == 0) {
                         break outer;
                     }
                 }
             }
 
-            Board board = up(i, j);
+            Board board = Board.this.up(i, j);
 
             if (board != null) boards.add(board);
 
-            board = right(i, j);
+            board = Board.this.right(i, j);
             if (board != null) boards.add(board);
 
-            board = down(i, j);
+            board = Board.this.down(i, j);
             if (board != null) boards.add(board);
 
-            board = left(i, j);
+            board = Board.this.left(i, j);
             if (board != null) boards.add(board);
         }
 
