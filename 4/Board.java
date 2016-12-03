@@ -151,6 +151,7 @@ public class Board implements Iterable<Board> {
         return left(i, j);
     }
 
+    @Override
     public boolean equals(Object other) {
         if (this == other) return true;
 
@@ -171,6 +172,7 @@ public class Board implements Iterable<Board> {
         return true;
     }
 
+    @Override
     public Iterator<Board> iterator() {
         return new BoardIterator();
     }
