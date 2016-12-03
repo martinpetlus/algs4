@@ -9,6 +9,9 @@ public class Board implements Iterable<Board> {
     public static final Comparator<Board> HAMMING_COMPARATOR =
         new HammingBoardComparator();
 
+    public static final Comparator<Board> MANHATTAN_COMPARATOR =
+        new ManhattanBoardComparator();
+
     private final int n;
     private final int[][] blocks;
 
@@ -26,6 +29,12 @@ public class Board implements Iterable<Board> {
     private static class HammingBoardComparator implements Comparator<Board> {
         public int compare(Board b1, Board b2) {
             return b1.hamming() - b2.hamming();
+        }
+    }
+
+    private static class ManhattanBoardComparator implements Comparator<Board> {
+        public int compare(Board b1, Board b2) {
+            return b1.manhattan() - b2.manhattan();
         }
     }
 
