@@ -26,9 +26,14 @@ public class Solver {
             }
 
             for (Board board : min.getBoard().neighbors()) {
-                if (min.getPrev() != null && min.getPrev().equals(board)) continue;
+                if (min.getPrev() != null &&
+                    min.getPrev().getBoard().equals(board)) {
+                    continue;
+                }
 
-                pq.insert(new Key(min, board, min.getMoves() + 1, board.manhattan()));
+                pq.insert(
+                    new Key(min, board, min.getMoves() + 1, board.manhattan())
+                );
             }
         }
     }
