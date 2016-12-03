@@ -229,6 +229,9 @@ public class Board {
     public String toString() {
         StringBuffer str = new StringBuffer();
 
+        str.append(n);
+        str.append('\n');
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 str.append(blocks[i][j]);
