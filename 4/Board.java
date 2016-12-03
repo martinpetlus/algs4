@@ -227,22 +227,22 @@ public class Board {
     }
 
     public String toString() {
-        StringBuffer str = new StringBuffer();
+        StringBuffer sb = new StringBuffer();
 
-        str.append(n);
-        str.append('\n');
+        sb.append(n);
+        sb.append('\n');
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                str.append(blocks[i][j]);
+                sb.append(blocks[i][j]);
 
-                if (j + 1 < n) str.append(' ');
+                if (j + 1 < n) sb.append(' ');
             }
 
-            if (i + 1 < n) str.append('\n');
+            if (i + 1 < n) sb.append('\n');
         }
 
-        return str.toString();
+        return sb.toString();
     }
 
     public static void main(String[] args) {
