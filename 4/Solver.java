@@ -9,32 +9,52 @@ import java.util.Collections;
 public class Solver {
     private Key goal;
     private int moves;
+    private boolean solvable = true;
     private List<Board> sequenceOfBoards;
-    private MinPQ<Key> pq = new MinPQ<>(new KeyComparator());
+    private MinPQ<Key> pq1 = new MinPQ<>(new KeyComparator());
+    private MinPQ<Key> pq2 = new MinPQ<>(new KeyComparator());
 
     public Solver(Board initial) {
         if (initial == null) {
             throw new NullPointerException("initial board is null");
         }
 
-        pq.insert(new Key(null, initial, 0, initial.manhattan()));
+        pq1.insert(new Key(null, initial, 0, initial.manhattan()));
+        pq2.insert(new Key(null, initial.twin(), 0, initial.manhattan()));
 
         while (true) {
-            Key min = pq.delMin();
+            Key min1 = pq1.delMin();
+            Key min2 = pq2.delMin();
 
-            if (min.getBoard().isGoal()) {
-                goal = min;
+            if (min1.getBoard().isGoal()) {
+                goal = min1;
                 break;
             }
 
-            for (Board board : min.getBoard().neighbors()) {
-                if (min.getPrev() != null &&
-                    min.getPrev().getBoard().equals(board)) {
+            if (min2.getBoard().isGoal()) {
+                solvable = false;
+                break;
+            }
+
+            for (Board board : min1.getBoard().neighbors()) {
+                if (min1.getPrev() != null &&
+                    min1.getPrev().getBoard().equals(board)) {
                     continue;
                 }
 
-                pq.insert(
-                    new Key(min, board, min.getMoves() + 1, board.manhattan())
+                pq1.insert(
+                    new Key(min1, board, min1.getMoves() + 1, board.manhattan())
+                );
+            }
+
+            for (Board board : min2.getBoard().neighbors()) {
+                if (min2.getPrev() != null &&
+                    min2.getPrev().getBoard().equals(board)) {
+                    continue;
+                }
+
+                pq2.insert(
+                    new Key(min2, board, min2.getMoves() + 1, board.manhattan())
                 );
             }
         }
@@ -54,7 +74,8 @@ public class Solver {
         }
 
         // Clean up
-        pq = null;
+        pq1 = null;
+        pq2 = null;
         goal = null;
     }
 
@@ -95,7 +116,7 @@ public class Solver {
     }
 
     public boolean isSolvable() {
-        return true;
+        return solvable;
     }
 
     public int moves() {
