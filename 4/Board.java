@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
 
-public class Board implements Iterable<Board> {
+public class Board {
     public static final Comparator<Board> HAMMING_COMPARATOR =
         new HammingBoardComparator();
 
@@ -186,13 +186,13 @@ public class Board implements Iterable<Board> {
         return true;
     }
 
-    @Override
-    public Iterator<Board> iterator() {
-        return new BoardIterator();
-    }
-
     public Iterable<Board> neighbors() {
-        return this;
+        return new Iterable<Board>() {
+            @Override
+            public Iterator<Board> iterator() {
+                return new BoardIterator();
+            }
+        };
     }
 
     private class BoardIterator implements Iterator<Board> {

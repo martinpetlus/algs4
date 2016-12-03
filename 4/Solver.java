@@ -24,7 +24,7 @@ public class Solver {
 
             if (min.isGoal()) break;
 
-            for (Board board : min) {
+            for (Board board : min.neighbors()) {
                 if (prevBoard != null && prevBoard.equals(board)) continue;
 
                 pq.insert(board);
