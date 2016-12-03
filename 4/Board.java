@@ -228,13 +228,14 @@ public class Board {
 
     public String toString() {
         StringBuffer sb = new StringBuffer();
+        String format = n < 100 ? "%2d" : "%3d";
 
         sb.append(n);
         sb.append('\n');
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                sb.append(blocks[i][j]);
+                sb.append(String.format(format, blocks[i][j]));
 
                 if (j + 1 < n) sb.append(' ');
             }
