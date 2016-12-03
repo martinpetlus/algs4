@@ -140,15 +140,29 @@ public class Board implements Iterable<Board> {
     }
 
     public Board twin() {
-        Board board;
+        int i1, j1, i2, j2;
 
-        int i = StdRandom.uniform(n);
-        int j = StdRandom.uniform(n);
+        while (true) {
+            i1 = StdRandom.uniform(n);
+            j1 = StdRandom.uniform(n);
 
-        if ((board = up(i, j)) != null) return board;
-        if ((board = right(i, j)) != null) return board;
-        if ((board = down(i, j)) != null) return board;
-        return left(i, j);
+            if (blocks[i1][j1] != 0) {
+                break;
+            }
+        }
+
+        while (true) {
+            i2 = StdRandom.uniform(n);
+            j2 = StdRandom.uniform(n);
+
+            if ((i1 != i2 || j1 != j2) && blocks[i2][j2] != 0) {
+                break;
+            }
+        }
+
+        Board board = new Board(blocks);
+        swap(board, i1, j1, i2, j2);
+        return board;
     }
 
     @Override
