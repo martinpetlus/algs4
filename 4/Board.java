@@ -198,9 +198,15 @@ public class Board {
             Board board = up(i, j);
 
             if (board != null) boards.add(board);
-            if ((board = right(i, j)) != null) boards.add(board);
-            if ((board = down(i, j)) != null) boards.add(board);
-            if ((board = left(i, j)) != null) boards.add(board);
+
+            board = right(i, j);
+            if (board != null) boards.add(board);
+
+            board = down(i, j);
+            if (board != null) boards.add(board);
+
+            board = left(i, j);
+            if (board != null) boards.add(board);
         }
 
         public boolean hasNext() {
