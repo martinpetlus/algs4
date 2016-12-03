@@ -1,17 +1,10 @@
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
 
 public class Board {
-    public static final Comparator<Board> HAMMING_COMPARATOR =
-        new HammingBoardComparator();
-
-    public static final Comparator<Board> MANHATTAN_COMPARATOR =
-        new ManhattanBoardComparator();
-
     private final int n;
     private final int[][] blocks;
 
@@ -23,18 +16,6 @@ public class Board {
             for (int j = 0; j < n; j++) {
                 this.blocks[i][j] = blocks[i][j];
             }
-        }
-    }
-
-    private static class HammingBoardComparator implements Comparator<Board> {
-        public int compare(Board b1, Board b2) {
-            return b1.hamming() - b2.hamming();
-        }
-    }
-
-    private static class ManhattanBoardComparator implements Comparator<Board> {
-        public int compare(Board b1, Board b2) {
-            return b1.manhattan() - b2.manhattan();
         }
     }
 

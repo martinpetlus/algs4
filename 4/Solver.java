@@ -2,13 +2,14 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.MinPQ;
 import java.util.List;
+import java.util.Comparator;
 import java.util.ArrayList;
 
 public class Solver {
     private int numberOfMoves;
     private Board prevBoard;
     private List<Board> sequenceOfBoards = new ArrayList<>();
-    private MinPQ<Board> pq = new MinPQ<>(Board.MANHATTAN_COMPARATOR);
+    private MinPQ<Board> pq = new MinPQ<>(new ManhattanBoardComparator());
 
     public Solver(Board initial) {
         if (initial == null) {
@@ -33,6 +34,18 @@ public class Solver {
             numberOfMoves++;
 
             prevBoard = min;
+        }
+    }
+
+    private static class ManhattanBoardComparator implements Comparator<Board> {
+        public int compare(Board b1, Board b2) {
+            return b1.manhattan() - b2.manhattan();
+        }
+    }
+
+    private static class HammingBoardComparator implements Comparator<Board> {
+        public int compare(Board b1, Board b2) {
+            return b1.hamming() - b2.hamming();
         }
     }
 
