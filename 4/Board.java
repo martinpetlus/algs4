@@ -203,19 +203,19 @@ public class Board implements Iterable<Board> {
     }
 
     public String toString() {
-        String str = "";
+        StringBuffer str = new StringBuffer();
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                str += blocks[i][j];
+                str.append(blocks[i][j]);
 
-                if (j + 1 < n) str += " ";
+                if (j + 1 < n) str.append(' ');
             }
 
-            if (i + 1 < n) str += "\n";
+            if (i + 1 < n) str.append('\n');
         }
 
-        return str;
+        return str.toString();
     }
 
     public static void main(String[] args) {
