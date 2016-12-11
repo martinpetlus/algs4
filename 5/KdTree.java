@@ -131,10 +131,20 @@ public class KdTree {
 
         if (n.isVertical()) {
             StdDraw.setPenColor(StdDraw.RED);
-            StdDraw.line(n.getPoint().x(), 0, n.getPoint().x(), 1);
+            StdDraw.line(
+                n.getPoint().x(),
+                n.getLeftRect().ymax(),
+                n.getPoint().x(),
+                n.getLeftRect().ymin()
+            );
         } else {
             StdDraw.setPenColor(StdDraw.BLUE);
-            StdDraw.line(0, n.getPoint().y(), 1, n.getPoint().y());
+            StdDraw.line(
+                n.getLeftRect().xmin(),
+                n.getPoint().y(),
+                n.getLeftRect().xmax(),
+                n.getPoint().y()
+            );
         }
 
         draw(n.getLeft());
