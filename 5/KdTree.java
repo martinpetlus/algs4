@@ -95,8 +95,10 @@ public class KdTree {
     }
 
     public void insert(Point2D p) {
-        root = insert(root, p, true, rootRect);
-        treeSize++;
+        if (!contains(p)) {
+            root = insert(root, p, true, rootRect);
+            treeSize++;
+        }
     }
 
     private boolean contains(Node n, Point2D p) {
