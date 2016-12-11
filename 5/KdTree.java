@@ -183,12 +183,12 @@ public class KdTree {
     private Point2D nearest(Point2D closest, Node node, RectHV rect, Point2D query) {
         if (node == null) return closest;
 
-        if (closest != null) {
-            if (closest.distanceTo(query) < rect.distanceTo(query)) {
-                return closest;
-            }
-        } else {
-            closest = root.getPoint();
+        if (node.getPoint().distanceTo(query) < closest.distanceTo(query)) {
+          closest = node.getPoint();
+        }
+
+        if (!rect.contains(query) && closest.distanceTo(query) < rect.distanceTo(query)) {
+            return closest;
         }
 
         if (node.isVertical()) {
@@ -215,7 +215,7 @@ public class KdTree {
     public Point2D nearest(Point2D p) {
         if (isEmpty()) return null;
 
-        return nearest(null, root, rootRect, p);
+        return nearest(root.getPoint(), root, rootRect, p);
     }
 
     public static void main(String[] args) {
