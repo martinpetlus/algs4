@@ -1,5 +1,7 @@
 # Algorithms, Part I by Princeton University - Coursera.org
 
+<https://www.coursera.org/learn/algorithms-part1>
+
 javac-algs4 *.java
 
 java-algs4 MainClass
